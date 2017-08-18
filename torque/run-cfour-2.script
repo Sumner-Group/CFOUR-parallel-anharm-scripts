@@ -1,0 +1,54 @@
+#!/bin/csh -f
+#
+#Script to run CFour, anharmonic vibrations in parallel
+# I. Sumner 9/28/2016
+#
+#WORKDIR is where anaytic harmonic calculations ran (run-cfour-1.script)
+#BASISDIR is location of basis set data, GENBAS
+set WORKDIR=/home/users/praston/Vinyl_Alcohol/syn/freq/anharm
+set BASISDIR=/home/users/praston/Vinyl_Alcohol/syn/freq/anharm
+#Create directories for new ZMATs, then fork out jobs
+foreach i(zmat*)
+  echo $i calc
+  set l=`echo $i | sed 's/zmat//'`
+  rm -rf $l
+  mkdir $l
+  cp $WORKDIR/$i $l/$i
+  cp $BASISDIR/GENBAS $l/
+  cd $l
+  #this is a corrective for a syntax error in CCSD(T), otherwise use cp command
+  cat $i| sed s'/(T/(T)/'g | sed s'/0)/0/'g > ZMAT
+  #cp $i ZMAT
+  #create submist script. Edit for your specific environment
+  cat > c4.pbs <<EOF
+#!/bin/tcsh
+#PBS -N Vinyl_Alcohol
+#PBS -j oe
+#PBS -m ae
+##PBS -M
+### Queue name
+#PBS -q tizard
+### Request nodes, processors, memory, walltime
+#PBS -l nodes=1:ppn=8
+#PBS -l mem=48gb,vmem=48gb
+#PBS -l walltime=100:00:00
+
+# This job's working directory
+echo Working directory is \$PBS_O_WORKDIR
+cd \$PBS_O_WORKDIR
+echo Running on host `hostname`
+echo Time is `date`
+echo Using nodes
+cat \$PBS_NODEFILE
+# Load module(s) and set path if required
+setenv PATH ".:/home/users//praston/cfour_v2.00beta-parallel/cfour_v2.00beta/bin:$PATH"
+module load intel/11.10.319  openmpi/intel
+#set variables
+set nproc = \`cat \$PBS_NODEFILE|wc -l\`
+setenv CFOUR_NUM_CORES "\$nproc"
+# Run the executable
+xcfour > xcfour.out
+EOF
+  qsub c4.pbs
+  cd ../
+end
