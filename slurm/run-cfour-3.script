@@ -1,0 +1,35 @@
+#!/bin/csh -f
+#
+#Script to run CFour, anharmonic vibrations in parallel
+# I. Sumner 9/28/2016
+# II. Soliday 6/22/2017 edited to run on slurm
+#
+#BASISDIR is the location of the basis set data, GENBAS
+set BASISDIR=/fast/users/a1621064/Syn-VA-QZ/anharm
+#
+mkdir -p final
+cp JOBARC final/JOBARC
+cp JAINDX final/JAINDX
+#
+#Finalize calculation
+#If this is run via queue, this portion of script should be separated
+#
+foreach i(0*)
+ echo $i
+ if( -f $i/FJOBARC ) then
+   cp $i/FJOBARC final/fja.$i
+ else
+   cd $i
+   xja2fja >> xja2fja.out
+   cd ../
+   cp $i/FJOBARC final/fja.$i
+ endif
+end
+cp $BASISDIR/GENBAS final/
+cd final/
+foreach i(fja.*)
+ echo $i
+ cp $i FJOBARC
+ xja2fja >> xja2fja.out
+ xcubic >> final.out
+end
