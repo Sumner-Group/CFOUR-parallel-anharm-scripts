@@ -1,0 +1,34 @@
+#!/bin/csh -f
+#
+#Script to run CFOUR with SLURM, anharmonic vibrations in parallel
+#Soliday 6/22/2016
+#
+# Run analytic harmonic calculation
+#
+#Create a submit script
+#(Edit the script below to conform to your specific environment)
+#
+cat > c4.slurm <<EOF
+#!/bin/tcsh
+
+#SBATCH -N 1
+#SBATCH -n 8
+#SBATCH --mem=125GB
+#SBATCH --time=3-00:00:00
+#SBATCH -p batch
+#SBATCH --mail-type=END
+##SBATCH --mail-user=
+#
+# This job's working directory
+echo Working directory is \$SLURM_SUBMIT_DIR
+cd \$SLURM_SUBMIT_DIR
+echo Running on host `hostname`
+echo Time is `date`
+# Load module(s) if required
+module load Cfour/2.0beta-intel-2017.01-parallel
+setenv CFOUR_NUM_CORES "\$SLURM_NTASKS"
+# Run the executable
+xcfour > xcfour.out
+EOF
+#submit the script
+sbatch c4.slurm
