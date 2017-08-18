@@ -7,8 +7,11 @@ I provided a ZMAT file similar to the one found at the above link. The main diff
 not finite difference. The scripts should be run in order:
 
 1) run-cfour-1.script: submits a job to queue that will perform an analytic frequency calculation and will provide ZMAT
-files containing displaced geometries for higher order derivative calculations
+files containing displaced geometries for higher order derivative calculations. If run correctly you should have 3N-6 new ZMAT
+files (N is the number of atoms).
 
-2) run-cfour-2.script: submits forked jobs to queue, one job for each displaced geometry created by the first script
+2) run-cfour-2.script: submits 3N-6 independent jobs to queue, creates one directory submits one job for each displaced geometry
+created by the first script
 
-3) run-cfour-3.script: collects all the data and performs final calculations. This is not submitted to queue
+3) run-cfour-3.script: collects all the data and performs final calculations. This is not submitted to queue and puts data into a 
+directory called "final"
