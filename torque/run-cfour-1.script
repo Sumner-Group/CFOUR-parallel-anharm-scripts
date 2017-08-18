@@ -1,0 +1,40 @@
+#!/bin/csh -f
+#
+#Script to run CFour, anharmonic vibrations in parallel
+# I. Sumner 9/28/2016
+#
+# Run analytic harmonic calculation
+#
+#Create submit script. You should edit this to conform to your specific environment
+#
+cat > c4.pbs <<EOF
+#!/bin/tcsh
+#PBS -N Vinyl_Alcohol
+#PBS -j oe
+#PBS -m ae
+##PBS -M
+### Queue name
+#PBS -q tizard
+### Request nodes, processors, memory, walltime.
+#PBS -l nodes=1:ppn=8
+#PBS -l mem=48gb,vmem=48gb
+#PBS -l walltime=100:00:00
+#
+# This job's working directory
+echo Working directory is \$PBS_O_WORKDIR
+cd \$PBS_O_WORKDIR
+echo Running on host `hostname`
+echo Time is `date`
+echo Using nodes
+cat \$PBS_NODEFILE
+#load module(s) or set path
+setenv PATH ".:/home/users//praston/cfour_v2.00beta-parallel/cfour_v2.00beta/bin:$PATH"
+module load intel/11.10.319  openmpi/intel
+#set variables
+set nproc = \`cat \$PBS_NODEFILE|wc -l\`
+setenv CFOUR_NUM_CORES "\$nproc"
+# Run the executable
+xcfour > xcfour.out
+EOF
+#submit job script
+qsub c4.pbs
