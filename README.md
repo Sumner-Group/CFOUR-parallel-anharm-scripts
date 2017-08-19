@@ -3,6 +3,7 @@ Scripts for running parallel anharmonic calculations using the Slurm/Torque work
 been tested using version 2.0-beta.
 These scripts are clearly indebted to the scripts provided by the CFour developers.
 http://slater.chemie.uni-mainz.de/cfour/index.php?n=Main.ScriptsForDoingVPT2CalculationsByFiniteDifferencesInParallel
+
 I provided a ZMAT file similar to the one found at the above link. The main differenece that it performs analytic frequencies, 
 not finite difference. The scripts should be run in order:
 
