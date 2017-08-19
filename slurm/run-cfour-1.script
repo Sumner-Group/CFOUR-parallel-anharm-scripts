@@ -7,6 +7,7 @@
 # Run analytic harmonic calculation
 #
 #Create a submit script
+#It is assumed that ZMAT and GENBAS are in current working directory
 #(Edit the script below to conform to your specific environment)
 #
 cat > c4.slurm <<EOF
