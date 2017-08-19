@@ -2,7 +2,7 @@
 #
 #Script to run CFOUR with SLURM, anharmonic vibrations in parallel
 #I. Sumner 9/28/2016
-#R. M. Soliday 6/22/2016
+#R. M. Soliday 6/22/2016 changed to run on Slurm
 #
 # Run analytic harmonic calculation
 #
