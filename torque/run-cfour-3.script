@@ -3,9 +3,6 @@
 #Script to run CFour, anharmonic vibrations in parallel
 # I. Sumner 9/28/2016
 #
-#BASISDIR is location of basis set information, GENBAS
-set BASISDIR=/home/users/praston/Vinyl_Alcohol/syn/freq/anharm
-#
 mkdir final
 cp JOBARC final/JOBARC
 cp JAINDX final/JAINDX
@@ -24,7 +21,6 @@ foreach i(0*)
    cp $i/FJOBARC final/fja.$i
  endif
 end
-cp $BASISDIR/GENBAS final/
 cd final/
 foreach i(fja.*)
  echo $i
