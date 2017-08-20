@@ -4,9 +4,6 @@
 # I. Sumner 9/28/2016
 # R. M. Soliday 6/22/2017 edited to run on slurm
 #
-#BASISDIR is the location of the basis set data, GENBAS
-set BASISDIR=/fast/users/a1621064/Syn-VA-QZ/anharm
-#
 mkdir -p final
 cp JOBARC final/JOBARC
 cp JAINDX final/JAINDX
@@ -25,7 +22,6 @@ foreach i(0*)
    cp $i/FJOBARC final/fja.$i
  endif
 end
-cp $BASISDIR/GENBAS final/
 cd final/
 foreach i(fja.*)
  echo $i
