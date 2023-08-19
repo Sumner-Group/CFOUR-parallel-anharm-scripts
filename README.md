@@ -16,3 +16,10 @@ created by the first script
 
 3) run-cfour-3.script: collects all the data and performs final calculations. This is not submitted to queue and puts data into a 
 directory called "final"
+
+**Do you want to cite this work?**
+---
+12.	Bunn, H.; Soliday, R. M.; Sumner, I.; Raston, P. L. “Far-infrared spectroscopic characterization of anti-vinyl alcohol” The Astrophysical Journal, 2017, 847, 67-72. [doi:10.3847/1538-4357/aa8870](https://doi.org/10.3847/1538-4357/aa8870)
+
+[![DOI](https://zenodo.org/badge/100744168.svg)](https://zenodo.org/badge/10.5281/zenodo.845888/100744168)
+
